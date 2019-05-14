@@ -1,44 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+
+import HomeForm from './component/Form/HomeForm.js';
+import ButtonForm from './component/Form/ButtonForm.js';
+import ListForm from './component/Form/ListForm.js';
 
 const App = () => {
   return (
     <BrowserRouter>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about/">About</Link>
-            </li>
-            <li>
-              <Link to="/users/">Users</Link>
-            </li>
-          </ul>
-        </nav>
+        <AppBar position="static" color="default">
+          <Toolbar>
+            <Typography variant="title" color="inherit">
+              AppBar
+            </Typography>
+          </Toolbar>
+        </AppBar>
 
-        <Route path="/" exact component={Index} />
-        <Route path="/about/" component={About} />
-        <Route path="/users/" component={Users} />
+        <BottomNavigation showLabels>
+          <BottomNavigationAction label="Home" icon={<RestoreIcon />} component={Link} to="/" />
+          <BottomNavigationAction label="ButtonForm" icon={<FavoriteIcon />} component={Link} to="/button" />
+          <BottomNavigationAction label="ListForm" icon={<LocationOnIcon />} component={Link} to="/list" />
+        </BottomNavigation>
+
+        <Route path="/" exact component={HomeForm} />
+        <Route path="/button/" component={ButtonForm} />
+        <Route path="/list/" component={ListForm} />
       </div>
     </BrowserRouter>
   );
-}
-
-function Index() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
 }
 
 export default App;
