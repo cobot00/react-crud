@@ -1,0 +1,34 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/react-crud
+    docker:
+      - image: circleci/node:8.4.0-browsers
+        environment:
+          TZ: /usr/share/zoneinfo/Asia/Tokyo
+    steps:
+      - checkout
+
+      - run:
+          name: Bower install to global
+          command: sudo npm install -g bower
+
+      - restore_cache:
+          key: react-crud-npm-cache-{{ checksum "package.json" }}
+
+      - run:
+          name: npm install
+          command: npm install
+
+      - save_cache:
+          key: react-crud-npm-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
+      - run:
+          name: chmod +x ./lint.sh
+          command: chmod +x ./lint.sh
+
+      - run:
+          name: ./lint.sh
+          command: ./lint.sh

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,6 +14,12 @@ class ListForm extends React.Component {
     this.state = {
       name: '',
       params: props.params
+    };
+  }
+
+  static get propTypes() {
+    return {
+      params: PropTypes.object.isRequired
     };
   }
 
@@ -84,5 +91,9 @@ const SimpleTable = (props) => {
     </div>
   );
 }
+
+SimpleTable.propTypes = {
+  rows: PropTypes.array
+};
 
 export default ListForm;
