@@ -1,7 +1,7 @@
 import React from 'react';
 
 class HomeForm extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
 
     this.state = {
