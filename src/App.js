@@ -35,7 +35,7 @@ const App = () => {
 
         <Route path="/" exact component={HomeForm} />
         <Route path="/button/" component={ButtonForm} />
-        <Route path="/list/" component={ListForm} />
+        <Route path="/list/" render={props => <ListForm params={{ a: 1, b: 2}} {...props} />} />
       </div>
     </BrowserRouter>
   );
