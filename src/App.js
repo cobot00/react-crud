@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import 'App.css';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,10 +11,10 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
-import HomeForm from './component/Form/HomeForm.js';
-import ButtonForm from './component/Form/ButtonForm.js';
-import ListForm from './component/Form/ListForm.js';
-import EnvironmentForm from './component/Form/EnvironmentForm.js';
+import HomeForm from 'component/Form/HomeForm.js';
+import ButtonForm from 'component/Form/ButtonForm.js';
+import ListForm from 'component/Form/ListForm.js';
+import EnvironmentForm from 'component/Form/EnvironmentForm.js';
 
 const App = () => {
   return (
