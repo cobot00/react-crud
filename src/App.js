@@ -1,6 +1,6 @@
 import React from 'react';
 import 'App.css';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch, Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -71,26 +71,58 @@ const Routing = (props) => {
           </div>
         </AppBar>
 
-        <BottomNavigation showLabels>
-          { props.authenticated ? null : <BottomNavigationAction label="Login" icon={<AccountBoxIcon />} component={Link} to="/login" /> }
-          { props.authenticated ? <BottomNavigationAction label="Home" icon={<RestoreIcon />} component={Link} to="/" /> : null }
-          { props.authenticated ? <BottomNavigationAction label="ButtonForm" icon={<FavoriteIcon />} component={Link} to="/button" /> : null }
-          { props.authenticated ? <BottomNavigationAction label="ListForm" icon={<LocationOnIcon />} component={Link} to="/list" /> : null }
-          { props.authenticated ? <BottomNavigationAction label="EnvironmentForm" icon={<SettingsIcon />} component={Link} to="/environment" /> : null }
-        </BottomNavigation>
+        { props.authenticated ? <AuthenticatedNavigation /> : <NotAuthenticatedNavigation /> }
 
-        <Switch>
-          <Route path="/login" component={LoginForm} />
-          <Route path="/" exact component={HomeForm} />
-          <Route path="/button/" component={ButtonForm} />
-          <Route path="/list/" render={props => <ListForm params={{ a: 1, b: 2}} {...props} />} />
-          <Route path="/environment" exact component={EnvironmentForm} />
-        </Switch>
+        { props.authenticated ? <AuthenticatedRouting /> : <NotAuthenticatedRouting /> }
       </div>
     </BrowserRouter>
   );
 };
 
 Routing.propTypes = { authenticated: PropTypes.bool };
+
+const AuthenticatedNavigation = () => {
+  return (
+    <BottomNavigation showLabels>
+      <BottomNavigationAction label="Home" icon={<RestoreIcon />} component={Link} to="/" />
+      <BottomNavigationAction label="ButtonForm" icon={<FavoriteIcon />} component={Link} to="/button" />
+      <BottomNavigationAction label="ListForm" icon={<LocationOnIcon />} component={Link} to="/list" />
+      <BottomNavigationAction label="EnvironmentForm" icon={<SettingsIcon />} component={Link} to="/environment" />
+    </BottomNavigation>
+  );
+};
+
+const NotAuthenticatedNavigation = () => {
+  return (
+    <BottomNavigation showLabels>
+      <BottomNavigationAction label="Login" icon={<AccountBoxIcon />} component={Link} to="/login" />
+    </BottomNavigation>
+  );
+};
+
+const AuthenticatedRouting = () => {
+  return (
+    <Switch>
+      <Route path="/" exact component={HomeForm} />
+      <Route path="/button/" component={ButtonForm} />
+      <Route path="/list/" render={props => <ListForm params={{ a: 1, b: 2}} {...props} />} />
+      <Route path="/environment" exact component={EnvironmentForm} />
+      <Route component={HomeForm} />
+    </Switch>
+  );
+};
+
+const NotAuthenticatedRouting = () => {
+  return (
+    <Switch>
+      <Route path="/login" component={LoginForm} />
+      <Route path='*'
+        render={() => (
+          <Redirect to="/login" />
+        )}
+      />
+    </Switch>
+  );
+};
 
 export default App;
