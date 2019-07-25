@@ -28,10 +28,12 @@ files=$(git diff --name-only $TARGET_BRANCH $BASE_BRANCH | grep -E '.js$')
 
 error=false
 for file in ${files}; do
-  ./node_modules/.bin/eslint ${file}
-  result=$?
-  if [ $result -ne 0 ]; then
-    error=true
+  if [ -f $file ]; then
+    ./node_modules/.bin/eslint ${file}
+    result=$?
+    if [ $result -ne 0 ]; then
+      error=true
+    fi
   fi
 done
 
