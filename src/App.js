@@ -13,11 +13,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-import LoginForm from 'component/Form/LoginForm.js';
-import HomeForm from 'component/Form/HomeForm.js';
-import ButtonForm from 'component/Form/ButtonForm.js';
-import ListForm from 'component/Form/ListForm.js';
-import EnvironmentForm from 'component/Form/EnvironmentForm.js';
+import LoginForm from 'components/forms/LoginForm.js';
+import HomeForm from 'components/forms/HomeForm.js';
+import ButtonForm from 'components/forms/ButtonForm.js';
+import ListForm from 'components/forms/ListForm.js';
+import EnvironmentForm from 'components/forms/EnvironmentForm.js';
 
 import StateContext from 'contexts/state-context.js';
 
@@ -73,10 +73,10 @@ const Routing = (props) => {
 
         <BottomNavigation showLabels>
           { props.authenticated ? null : <BottomNavigationAction label="Login" icon={<AccountBoxIcon />} component={Link} to="/login" /> }
-          <BottomNavigationAction label="Home" icon={<RestoreIcon />} component={Link} to="/" />
-          <BottomNavigationAction label="ButtonForm" icon={<FavoriteIcon />} component={Link} to="/button" />
-          <BottomNavigationAction label="ListForm" icon={<LocationOnIcon />} component={Link} to="/list" />
-          <BottomNavigationAction label="EnvironmentForm" icon={<SettingsIcon />} component={Link} to="/environment" />
+          { props.authenticated ? <BottomNavigationAction label="Home" icon={<RestoreIcon />} component={Link} to="/" /> : null }
+          { props.authenticated ? <BottomNavigationAction label="ButtonForm" icon={<FavoriteIcon />} component={Link} to="/button" /> : null }
+          { props.authenticated ? <BottomNavigationAction label="ListForm" icon={<LocationOnIcon />} component={Link} to="/list" /> : null }
+          { props.authenticated ? <BottomNavigationAction label="EnvironmentForm" icon={<SettingsIcon />} component={Link} to="/environment" /> : null }
         </BottomNavigation>
 
         <Switch>
