@@ -1,4 +1,7 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
+
+import StateContext from 'contexts/state-context.js';
 
 class HomeForm extends React.Component {
   constructor() {
@@ -22,25 +25,31 @@ class HomeForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>Home</h2>
+      <StateContext.Consumer>
+        {(context) => (
+          <div style={{marginLeft : '20px'}}>
+            <h2>Home</h2>
 
-        <div className="block-margin">
-          <label>名前：</label>
-          <input type="text" value={this.state.name} onChange={(e) => this.onChangeInput(e, 'name')} />
-        </div>
+            <div className="block-margin">
+              <label>名前：</label>
+              <input type="text" value={this.state.name} onChange={(e) => this.onChangeInput(e, 'name')} />
+            </div>
 
-        <div>
-          <label>性別：</label>
-          <select value={this.state.value} onChange={(e) => this.onChangeSelect(e, 'sex')}>
-            <option value="male">男性</option>
-            <option value="female">女性</option>
-            <option value="other">指定しない</option>
-          </select>
-        </div>
+            <div>
+              <label>性別：</label>
+              <select value={this.state.value} onChange={(e) => this.onChangeSelect(e, 'sex')}>
+                <option value="male">男性</option>
+                <option value="female">女性</option>
+                <option value="other">指定しない</option>
+              </select>
+            </div>
 
-        <SubComponent sex={this.state.sex} />
-      </div>
+            <SubComponent sex={this.state.sex} />
+
+            { context.authenticated ? <Button variant="contained" color="primary" onClick={context.logout} style={{marginTop: '30px'}} >Logout</Button> : null }
+          </div>
+        )}
+      </StateContext.Consumer>
     );
   }
 }
