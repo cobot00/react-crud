@@ -1,6 +1,6 @@
 import React from 'react';
 import 'App.css';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -35,10 +35,12 @@ const App = () => {
           <BottomNavigationAction label="EnvironmentForm" icon={<LocationOnIcon />} component={Link} to="/environment" />
         </BottomNavigation>
 
-        <Route path="/" exact component={HomeForm} />
-        <Route path="/button/" component={ButtonForm} />
-        <Route path="/list/" render={props => <ListForm params={{ a: 1, b: 2}} {...props} />} />
-        <Route path="/environment" exact component={EnvironmentForm} />
+        <Switch>
+          <Route path="/" exact component={HomeForm} />
+          <Route path="/button/" component={ButtonForm} />
+          <Route path="/list/" render={props => <ListForm params={{ a: 1, b: 2}} {...props} />} />
+          <Route path="/environment" exact component={EnvironmentForm} />
+        </Switch>
       </div>
     </BrowserRouter>
   );
