@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
-import StateContext from 'contexts/state-context.js';
+import SessionContext from 'session/session-context.js';
 
 class HomeForm extends React.Component {
   constructor() {
@@ -25,7 +25,7 @@ class HomeForm extends React.Component {
 
   render() {
     return (
-      <StateContext.Consumer>
+      <SessionContext.Consumer>
         {(context) => (
           <div style={{marginLeft : '20px'}}>
             <h2>Home</h2>
@@ -49,7 +49,7 @@ class HomeForm extends React.Component {
             { context.authenticated ? <Button variant="contained" color="primary" onClick={context.logout} style={{marginTop: '30px'}} >Logout</Button> : null }
           </div>
         )}
-      </StateContext.Consumer>
+      </SessionContext.Consumer>
     );
   }
 }

@@ -19,7 +19,8 @@ import ButtonForm from 'components/forms/ButtonForm.js';
 import ListForm from 'components/forms/ListForm.js';
 import EnvironmentForm from 'components/forms/EnvironmentForm.js';
 
-import StateContext from 'contexts/state-context.js';
+import SessionContext from 'session/session-context.js';
+import SessionState from 'session/session-state.js';
 
 import PropTypes from 'prop-types';
 
@@ -31,16 +32,18 @@ class App extends React.Component {
       this.setState(() => ({
         authenticated: true
       }));
+      SessionState.login();
     };
 
     const logout = () => {
       this.setState(() => ({
         authenticated: false
       }));
+      SessionState.logout();
     };
 
     this.state = {
-      authenticated: false,
+      authenticated: SessionState.authenticated,
       login: login,
       logout: logout
     };
@@ -48,9 +51,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <StateContext.Provider value={this.state}>
+      <SessionContext.Provider value={this.state}>
         <Routing authenticated={this.state.authenticated} />
-      </StateContext.Provider>
+      </SessionContext.Provider>
     );
   }
 }
@@ -68,6 +71,10 @@ const Routing = (props) => {
 
           <div style={{marginBottom: '10px', marginLeft: '30px'}}>
             <b>authenticated:</b> {String(props.authenticated)}
+          </div>
+
+          <div style={{marginBottom: '10px', marginLeft: '30px'}}>
+            <b>Session authenticated:</b> {String(SessionState.authenticated)}
           </div>
         </AppBar>
 

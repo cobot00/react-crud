@@ -1,9 +1,9 @@
 import React from 'react';
 
-const StateContext = React.createContext({
+const SessionContext = React.createContext({
   authenticated: false,
   login: () => {},
   logout: () => {}
 });
 
-export default StateContext;
+export default SessionContext;
