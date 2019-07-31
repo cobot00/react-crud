@@ -4,8 +4,7 @@ import {BrowserRouter, Route, Redirect, Switch, Link} from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import {List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 
 import AccountBoxIcon from '@material-ui/icons/AccountBox.js';
 import RestoreIcon from '@material-ui/icons/Restore';
@@ -78,9 +77,15 @@ const Routing = (props) => {
           </div>
         </AppBar>
 
-        { props.authenticated ? <AuthenticatedNavigation /> : <NotAuthenticatedNavigation /> }
+        <ul className="flex-container" style={{paddingLeft: '5px'}}>
+          <li style={{width: '350px'}}>
+            { props.authenticated ? <AuthenticatedMenus /> : <NotAuthenticatedMenus /> }
+          </li>
 
-        { props.authenticated ? <AuthenticatedRouting /> : <NotAuthenticatedRouting /> }
+          <li className="right-justified-item" style={{width: '100%'}}>
+            { props.authenticated ? <AuthenticatedRouting /> : <NotAuthenticatedRouting /> }
+          </li>
+        </ul>
       </div>
     </BrowserRouter>
   );
@@ -88,22 +93,40 @@ const Routing = (props) => {
 
 Routing.propTypes = {authenticated: PropTypes.bool};
 
-const AuthenticatedNavigation = () => {
+const AuthenticatedMenus = () => {
   return (
-    <BottomNavigation showLabels>
-      <BottomNavigationAction label="Home" icon={<RestoreIcon />} component={Link} to="/" />
-      <BottomNavigationAction label="ButtonForm" icon={<FavoriteIcon />} component={Link} to="/button" />
-      <BottomNavigationAction label="ListForm" icon={<LocationOnIcon />} component={Link} to="/list" />
-      <BottomNavigationAction label="EnvironmentForm" icon={<SettingsIcon />} component={Link} to="/environment" />
-    </BottomNavigation>
+    <List>
+      <ListItem button component={Link} to="/">
+        <ListItemIcon><RestoreIcon /></ListItemIcon>
+        <ListItemText primary="Home" />
+      </ListItem>
+
+      <ListItem button component={Link} to="/button">
+        <ListItemIcon><FavoriteIcon /></ListItemIcon>
+        <ListItemText primary="ButtonForm" />
+      </ListItem>
+
+      <ListItem button component={Link} to="/list">
+        <ListItemIcon><LocationOnIcon /></ListItemIcon>
+        <ListItemText primary="ListForm" />
+      </ListItem>
+
+      <ListItem button component={Link} to="/environment">
+        <ListItemIcon><SettingsIcon /></ListItemIcon>
+        <ListItemText primary="EnvironmentForm" />
+      </ListItem>
+    </List>
   );
 };
 
-const NotAuthenticatedNavigation = () => {
+const NotAuthenticatedMenus = () => {
   return (
-    <BottomNavigation showLabels>
-      <BottomNavigationAction label="Login" icon={<AccountBoxIcon />} component={Link} to="/login" />
-    </BottomNavigation>
+    <List>
+      <ListItem button component={Link} to="/login">
+        <ListItemIcon><AccountBoxIcon /></ListItemIcon>
+        <ListItemText primary="Login" />
+      </ListItem>
+    </List>
   );
 };
 
