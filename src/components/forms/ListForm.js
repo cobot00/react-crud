@@ -6,6 +6,11 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit.js';
+import DeleteIcon from '@material-ui/icons/Delete.js';
+
+import {mockAPI} from 'api/mock.js';
 
 class ListForm extends React.Component {
   constructor(props) {
@@ -15,6 +20,36 @@ class ListForm extends React.Component {
       name: '',
       params: props.params
     };
+
+    this.onClickCreate = this.onClickCreate.bind(this);
+    this.onClickUpdate = this.onClickUpdate.bind(this);
+    this.onClickDelete = this.onClickDelete.bind(this);
+
+    mockAPI.index().then((res) => {
+      this.setState({
+        records: res.data
+      });
+    });
+  }
+
+  onClickCreate() {
+    const params = {label: 'dummy', socre: 12};
+    mockAPI.create(params).then((res) => {
+      console.log('[onClickCreate]: ' + JSON.stringify(res));
+    });
+  }
+
+  onClickUpdate(id) {
+    const params = {label: 'dummy', socre: 12};
+    mockAPI.update(id, params).then((res) => {
+      console.log('[onClickUpdate]: ' + JSON.stringify(res));
+    });
+  }
+
+  onClickDelete(id) {
+    mockAPI.delete(id).then((res) => {
+      console.log('[onClickDelete]: ' + JSON.stringify(res));
+    });
   }
 
   static get propTypes() {
@@ -28,27 +63,63 @@ class ListForm extends React.Component {
       <div>
         <h2>List</h2>
 
-        <SimpleTable />
+        <div style={{marginLeft: '30px'}}>
+          <Button variant="outlined" color="primary" size="small" onClick={this.onClickCreate} style={{marginRight: '30px'}} >
+            Create
+          </Button>
+        </div>
+
+        <SimpleTable rows={this.state.records} updateAction={this.onClickUpdate} deleteAction={this.onClickDelete} />
 
         <NumberList />
       </div>
     );
   }
-
-  generateRow() {
-
-    const createData = (id, name, calories, fat, carbs, protein) => {
-      return {id, name, calories, fat, carbs, protein};
-    };
-    return [
-      createData(1, 'Frozen yoghurt', 159, 6.0, 24, 4.0),
-      createData(2, 'Ice cream sandwich', 237, 9.0, 37, 4.3),
-      createData(3, 'Eclair', 262, 16.0, 24, 6.0),
-      createData(4, 'Cupcake', 305, 3.7, 67, 4.3),
-      createData(5, 'Gingerbread', 356, 16.0, 49, 3.9),
-    ];
-  }
 }
+
+const SimpleTable = (props) => {
+  const rows = props.rows || [];
+  const updateAction = props.updateAction;
+  const deleteAction = props.deleteAction;
+
+  return (
+    <div style={{height: '400px', overflow: 'scroll', marginBottom: '30px'}}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell align="left" className="sticky-head">id</TableCell>
+            <TableCell align="left" className="sticky-head">label</TableCell>
+            <TableCell align="left" className="sticky-head">action</TableCell>
+          </TableRow>
+        </TableHead>
+
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell align="left">{row.id}</TableCell>
+              <TableCell align="left">{row.label}</TableCell>
+              <TableCell align="left">
+                <button onClick={() => updateAction(row.id)} className="cell-button" style={{marginRight: '30px'}}>
+                  <EditIcon color="primary" fontSize="small" />
+                </button>
+
+                <button onClick={() => deleteAction(row.id)} className="cell-button">
+                  <DeleteIcon color="secondary" fontSize="small" />
+                </button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+
+SimpleTable.propTypes = {
+  rows: PropTypes.array,
+  updateAction: PropTypes.func,
+  deleteAction: PropTypes.func
+};
 
 const NumberList = () => {
   const items = [1, 2, 3, 4].map((n) =>
@@ -59,44 +130,6 @@ const NumberList = () => {
   return (
     <ul>{items}</ul>
   );
-};
-
-const SimpleTable = () => {
-  const rows = Array(100).fill(0).map((_, index) => {
-    const n = index + 1;
-    const state = ['good', 'bad', 'fine'][Math.floor(Math.random() * 3)];
-    return {id: n, label: `Label${n}`, state: state, score: Math.floor(Math.random() * 50)};
-  });
-
-  return (
-    <div style={{height: '400px', overflow: 'scroll', marginBottom: '30px'}}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell align="left" className="sticky-head">ID</TableCell>
-            <TableCell align="left" className="sticky-head">Label</TableCell>
-            <TableCell align="left" className="sticky-head">State</TableCell>
-            <TableCell align="left" className="sticky-head">Score</TableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell align="left"><span className="simple-cell">{row.id}</span></TableCell>
-              <TableCell align="left"><span className="simple-cell">{row.label}</span></TableCell>
-              <TableCell align="left"><span className="simple-cell">{row.state}</span></TableCell>
-              <TableCell align="left"><span className="simple-cell">{row.score}</span></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  );
-};
-
-SimpleTable.propTypes = {
-  rows: PropTypes.array
 };
 
 export default ListForm;
