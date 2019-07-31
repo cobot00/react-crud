@@ -8,8 +8,8 @@ class LoginForm extends React.Component {
     return (
       <SessionContext.Consumer>
         {(context) => (
-          <div style={{marginLeft : '20px'}}>
-            <Button variant="contained" color="primary" onClick={context.login} style={{marginRight : '20px'}} >
+          <div style={{marginLeft: '20px'}}>
+            <Button variant="contained" color="primary" onClick={context.login} style={{marginRight: '20px'}} >
               Login
             </Button>
           </div>

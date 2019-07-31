@@ -7,6 +7,6 @@ const ButtonForm = () => {
       Material-UI
     </Button>
   );
-}
+};
 
 export default ButtonForm;

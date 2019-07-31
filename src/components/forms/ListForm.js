@@ -37,7 +37,7 @@ class ListForm extends React.Component {
 
   generateRow() {
     const createData = (id, name, calories, fat, carbs, protein) => {
-      return { id, name, calories, fat, carbs, protein };
+      return {id, name, calories, fat, carbs, protein};
     };
     return [
       createData(1, 'Frozen yoghurt', 159, 6.0, 24, 4.0),
@@ -58,7 +58,7 @@ const NumberList = () => {
   return (
     <ul>{items}</ul>
   );
-}
+};
 
 const SimpleTable = (props) => {
   const rows = props.rows;
@@ -75,7 +75,7 @@ const SimpleTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
+          {rows.map((row) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 {row.name}
@@ -90,7 +90,7 @@ const SimpleTable = (props) => {
       </Table>
     </div>
   );
-}
+};
 
 SimpleTable.propTypes = {
   rows: PropTypes.array
