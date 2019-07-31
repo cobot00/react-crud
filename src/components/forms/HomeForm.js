@@ -16,18 +16,18 @@ class HomeForm extends React.Component {
   }
 
   onChangeInput(e, key) {
-    this.setState({ [key]: e.target.value });
+    this.setState({[key]: e.target.value});
   }
 
   onChangeSelect(e, key) {
-    this.setState({ [key]: e.target.value });
+    this.setState({[key]: e.target.value});
   }
 
   render() {
     return (
       <SessionContext.Consumer>
         {(context) => (
-          <div style={{marginLeft : '20px'}}>
+          <div style={{marginLeft: '20px'}}>
             <h2>Home</h2>
 
             <div className="block-margin">
@@ -62,6 +62,6 @@ const SubComponent = (params) => {
   } else {
     return null;
   }
-}
+};
 
 export default HomeForm;
