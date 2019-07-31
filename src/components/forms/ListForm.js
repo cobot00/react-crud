@@ -28,7 +28,7 @@ class ListForm extends React.Component {
       <div>
         <h2>List</h2>
 
-        <SimpleTable rows={this.generateRow()} />
+        <SimpleTable />
 
         <NumberList />
       </div>
@@ -36,6 +36,7 @@ class ListForm extends React.Component {
   }
 
   generateRow() {
+
     const createData = (id, name, calories, fat, carbs, protein) => {
       return {id, name, calories, fat, carbs, protein};
     };
@@ -60,30 +61,32 @@ const NumberList = () => {
   );
 };
 
-const SimpleTable = (props) => {
-  const rows = props.rows;
+const SimpleTable = () => {
+  const rows = Array(100).fill(0).map((_, index) => {
+    const n = index + 1;
+    const state = ['good', 'bad', 'fine'][Math.floor(Math.random() * 3)];
+    return {id: n, label: `Label${n}`, state: state, score: Math.floor(Math.random() * 50)};
+  });
+
   return (
-    <div>
+    <div style={{height: '400px', overflow: 'scroll', marginBottom: '30px'}}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat (g)</TableCell>
-            <TableCell align="right">Carbs (g)</TableCell>
-            <TableCell align="right">Protein (g)</TableCell>
+            <TableCell align="left" className="sticky-head">ID</TableCell>
+            <TableCell align="left" className="sticky-head">Label</TableCell>
+            <TableCell align="left" className="sticky-head">State</TableCell>
+            <TableCell align="left" className="sticky-head">Score</TableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="left"><span className="simple-cell">{row.id}</span></TableCell>
+              <TableCell align="left"><span className="simple-cell">{row.label}</span></TableCell>
+              <TableCell align="left"><span className="simple-cell">{row.state}</span></TableCell>
+              <TableCell align="left"><span className="simple-cell">{row.score}</span></TableCell>
             </TableRow>
           ))}
         </TableBody>
