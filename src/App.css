@@ -24,3 +24,9 @@
 .simple-cell {
   font-size: 16px;
 }
+
+.cell-button {
+  border-style: none;
+  background-color: #fff;
+  cursor: pointer;
+}
