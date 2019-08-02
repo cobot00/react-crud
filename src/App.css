@@ -14,6 +14,11 @@
   width: 100%;
 }
 
+.flex-container {
+  display: flex;
+  list-style: none;
+}
+
 .sticky-head {
   background-color: #fff;
   position: sticky;
