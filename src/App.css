@@ -35,3 +35,9 @@
   background-color: #fff;
   cursor: pointer;
 }
+
+.error-message {
+  color: #ff573f;
+  font-weight: bold;
+  white-space: pre;
+}
