@@ -11,11 +11,11 @@ class SessionState {
     }
   }
 
-  login() {
+  login(session) {
     this.session = {
-      sessionToken: 'dummy',
-      refreshToken: 'dummy',
-      expiredAt: new Date(9999, 11, 31).getTime()
+      sessionToken: session.sessionToken,
+      refreshToken: session.refreshToken,
+      expiredAt: session.expiredAt
     };
     localStorage.setItem(this.sessionKey, JSON.stringify(this.session));
     this.authenticated = true;

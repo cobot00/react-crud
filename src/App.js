@@ -20,6 +20,7 @@ import EnvironmentForm from 'components/forms/EnvironmentForm.js';
 
 import SessionContext from 'session/session-context.js';
 import SessionState from 'session/session-state.js';
+import {sessionAPI} from 'api/session.js';
 
 import PropTypes from 'prop-types';
 
@@ -27,11 +28,19 @@ class App extends React.Component {
   constructor() {
     super();
 
-    const login = () => {
-      this.setState(() => ({
-        authenticated: true
-      }));
-      SessionState.login();
+    const login = (email, password) => {
+      const params = {
+        email: email,
+        password: password
+      };
+      sessionAPI.create(params).then((res) => {
+        this.setState(() => ({
+          authenticated: true
+        }));
+        SessionState.login(res.data);
+      }).catch((error) => {
+        console.error('error:' + JSON.stringify(error));
+      });
     };
 
     const logout = () => {

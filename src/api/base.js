@@ -22,12 +22,16 @@ class APIBase {
       .then((res) => {
         return res.text().then((text) => {
           const status = res.status;
-          return {data: text.trim(), status: status};
+          return {data: text.trim(), status: status, ok: res.ok};
         });
       })
       .then((res) => {
         const data = res.data ? JSON.parse(res.data) : {};
-        return {data: data, status: res.status};
+        const result = {data: data, status: res.status};
+        if (!res.ok) {
+          return Promise.reject(result);
+        }
+        return result;
       });
   }
 
